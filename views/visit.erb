@@ -21,9 +21,9 @@
   <div class="form-group">
     <label>Ваш парикмахер </label>
     <select name="master" class="form-control">
-    <option>Walter White</option>
-    <option>Jessie Pincman</option>
-    <option>Gas Fring</option>
+    <option <%=@master == 'Walter White'? 'selected' : ''%>>Walter White</option>
+    <option <%=@master == 'Jessie Pincman'? 'selected' : ''%>>Jessie Pincman</option>
+    <option <%=@master == 'Gus Fring'? 'selected' : ''%>>Gus Fring</option>
     </select>
   </div>
   <div class="form-group">
