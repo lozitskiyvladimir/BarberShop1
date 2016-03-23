@@ -1,0 +1,11 @@
+<h2> Contacts </h2>
+
+<form action= "/contacts" method= "POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input name= "email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value=<%= @mail%>>
+  </div>
+    <textarea  name= "text" class="form-control" rows="3" placeholder="Textarea"></textarea>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
