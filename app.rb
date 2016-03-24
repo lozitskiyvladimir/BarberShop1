@@ -4,17 +4,17 @@ require 'sinatra/reloader'
 require 'sqlite3'
 
 configure do
-	@db = SQLite3::Database.new 'barbershop.db'
-	@db.execute ' CREATE TABLE IF NOT EXISTS
+	db = get_db
+	db.execute ' CREATE TABLE IF NOT EXISTS
 		 "Users"
 		  (
 		 		"id" INTEGER PRIMARY KEY AUTOINCREMENT, 
 		 		"username" TEXT, 
 		 		"phone" TEXT,
-		 		"date-stamp" TEXT,
+		 		"datestamp" TEXT,
 		 		"barber" TEXT,
 		 		"color" TEXT
-		  );'
+		  )'
 end
 
 get '/' do
@@ -34,10 +34,10 @@ get '/contacts' do
 end
 
 post '/visit' do
-	@name   = params[:username]
+	@username   = params[:username]
 	@phone  = params[:phone]
-	@time   = params[:datetime]
-	@master = params[:master]
+	@datetime   = params[:datetime]
+	@barber = params[:master]
 	@color  = params[:color]
 	hh =  {:username => 'Enter name',
 		   :phone    => 'Enter phone',
@@ -47,17 +47,24 @@ post '/visit' do
 			if @error != ""
 				return erb :visit
 			end
-			f = File.open './public/users.txt', 'a'
+
+		 db = get_db
+		db.execute ' insert into
+			Users
+			(
+				username,
+				phone,
+				datestamp,
+				barber,
+				color
+			)
+			values (?, ?, ?, ?, ?)', [@username, @phone, @datetime,  @barber, @color]	
 		
-	f.write "#{@name}, phone: #{@phone}, time: #{@time}, master: #{@master}, color: #{@color}"
-	f.close
-   # erb :visit
-	erb "#{@name}, phone: #{@phone}, time: #{@time}, master: #{@master}, color: #{@color}"
+	
+	erb "#{@username}, phone: #{@phone}, time: #{@datetime}, barber: #{@barber}, color: #{@color}"
 end
 
 post '/contacts' do
-
- #require 'pony'
     @mail   = params[:email]
 	@text   = params[:text]
 	hh = {:email => 'Enter email adress',
@@ -67,28 +74,12 @@ post '/contacts' do
 				return erb :contacts
 			end
 
- Pony.mail(
-  :name => params[:name],
-  :mail => params[:mail],
-  :body => params[:body],
-  :to => 'a_lumbee@gmail.com',
-  :subject => params[:name] + " has contacted you",
-  :body => params[:message],
-  :port => '587',
-  :via => :smtp,
-  :via_options => {
-  :address              => 'smtp.gmail.com', 
-    :port                 => '587', 
-    :enable_starttls_auto => true, 
-    :user_name            => 'lumbee', 
-    :password             => 'p@55w0rd', 
-    :authentication       => :plain, 
-    :domain               => 'localhost.localdomain'
-  })
-     #redirect '/success' 
-
-	f = File.open './public/users.txt', 'a'
-	f.write "#{@mail}, #{@text}."
-	f.close
 	erb :contacts
 end
+
+def get_db
+	return SQLite3::Database.new 'barbershop.db'
+end
+
+
+
