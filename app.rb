@@ -22,6 +22,17 @@ configure do
 		 		"barber" TEXT,
 		 		"color" TEXT
 		  )'
+
+	# db.execute ' CREATE TABLE IF NOT EXISTS
+	# 	 "Barbers"
+	# 	  (
+	# 	 		"id" INTEGER PRIMARY KEY AUTOINCREMENT, 
+	# 	 		"username" TEXT, 
+	# 	 		"phone" TEXT,
+	# 	 		"datestamp" TEXT,
+	# 	 		"barber" TEXT,
+	# 	 		"color" TEXT
+	# 	  )'	  
 end
 
 get '/' do
@@ -85,7 +96,12 @@ post '/contacts' do
 end
 
 get '/showusers' do
- 	erb 'hello world'
+ 	db = get_db
+ 	@results = db.execute 'select * from Users order by id desc ' 
+
+ 	
+ 		erb :showusers
+ 		
 end
 
 

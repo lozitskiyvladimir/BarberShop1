@@ -1,0 +1,29 @@
+
+<%= @results %>
+
+<table class="table">
+		<tr>
+			<th>id</th>
+  			<th>Username</th> 
+  			<th>Phone</th> 
+  			<th>DateTime</th> 
+  			<th>Barber</th> 
+  			<th>Color</th> 
+
+		</tr>
+	<% @results.each do |row| %>
+
+		
+		<tr> 
+		 
+    		<td><%= row['username']%> </td> 
+    		<td><%= row['phone']%> </td>
+     		<td><%= row['datestamp']%> </td> 
+     		<td><%= row['barber']%> </td>
+     		<td><%= row['color']%> </td> 
+     							
+    	</tr>
+ 
+ 	<% end %>
+
+ </table>
