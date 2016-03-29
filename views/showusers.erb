@@ -1,5 +1,5 @@
 
-<%= @results %>
+
 
 <table class="table table-striped">
 	<thead>
@@ -13,10 +13,9 @@
 
 		</tr>
 	</thead>	
-	<body>
+	<tbody>
 	<% @results.each do |row| %>
 
-		
 		<tr> 
 		 
     		<td><%= row['username']%> </td> 
@@ -28,6 +27,6 @@
     	</tr>
  
  	<% end %>
- 	</body>
+ 	</tbody>
 
  </table>
