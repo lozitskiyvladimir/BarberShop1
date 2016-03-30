@@ -61,7 +61,7 @@ get '/about' do
 end
 
 get '/visit' do
-	
+
 	erb :visit
 end
 get '/contacts' do 
@@ -96,8 +96,8 @@ post '/visit' do
 			)
 			values (?, ?, ?, ?, ?)', [@username, @phone, @datetime,  @barber, @color]	
 		
-	#erb :visit
-	erb "#{@username}, phone: #{@phone}, time: #{@datetime}, barber: #{@barber}, color: #{@color}"
+	
+	erb "<h2> Спасибо вы записались</h2>"
 end
 
 post '/contacts' do
@@ -121,6 +121,7 @@ get '/showusers' do
  		erb :showusers
 
 end
+
 
 
 
