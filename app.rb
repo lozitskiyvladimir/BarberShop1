@@ -21,6 +21,10 @@ def get_db
 	return db
 end
 
+before do
+	db = get_db
+ 	@barbers = db.execute 'select * from Barbers ' 
+end
 
 configure do
 	db = get_db
@@ -57,6 +61,7 @@ get '/about' do
 end
 
 get '/visit' do
+	
 	erb :visit
 end
 get '/contacts' do 
@@ -64,6 +69,7 @@ get '/contacts' do
 end
 
 post '/visit' do
+
 	@username   = params[:username]
 	@phone  = params[:phone]
 	@datetime   = params[:datetime]
@@ -90,7 +96,7 @@ post '/visit' do
 			)
 			values (?, ?, ?, ?, ?)', [@username, @phone, @datetime,  @barber, @color]	
 		
-	
+	#erb :visit
 	erb "#{@username}, phone: #{@phone}, time: #{@datetime}, barber: #{@barber}, color: #{@color}"
 end
 
